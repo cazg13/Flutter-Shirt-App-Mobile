@@ -1,13 +1,13 @@
-import 'package:flutter_clothingapp/models/shoe.dart';
+import 'package:flutter_clothingapp/models/shirt.dart';
 import 'package:flutter_clothingapp/services/firestore_service.dart';
 
-class ShoeRepository {
+class ShirtRepository {
   /// Lấy tất cả giày từ database
-  Future<List<Shoe>> getAllShoes() async {
+  Future<List<Shirt>> getAllShirts() async {
     try {
       List<Map<String, dynamic>> data = 
-          await FirestoreService.getAllShoes();
-      return data.map((item) => Shoe.fromFirebase(item, item['id'])).toList();
+          await FirestoreService.getAllShirts();
+      return data.map((item) => Shirt.fromFirebase(item, item['id'])).toList();
     } catch (e) {
       print('Repository Error: $e');
       rethrow;
@@ -15,12 +15,12 @@ class ShoeRepository {
   }
 
   /// Lấy 1 giày theo ID
-  Future<Shoe?> getShoeById(String id) async {
+  Future<Shirt?> getShirtById(String id) async {
     try {
       Map<String, dynamic>? data = 
-          await FirestoreService.getShoeById(id);
+          await FirestoreService.getShirtById(id);
       if (data == null) return null;
-      return Shoe.fromFirebase(data, id);
+      return Shirt.fromFirebase(data, id);
     } catch (e) {
       print('Repository Error: $e');
       rethrow;

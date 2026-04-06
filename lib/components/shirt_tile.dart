@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clothingapp/components/shoeInfo.dart';
-import 'package:flutter_clothingapp/models/shoe.dart';
+import 'package:flutter_clothingapp/components/shirtInfo.dart';
+import 'package:flutter_clothingapp/models/shirt.dart';
 
 // CẤU HÌNH CHO TỪNG THẺ SẢN PHẨM ở SHOP PAGE GIÀY, BAO GỒM HÌNH ẢNH, TÊN, GIÁ VÀ BUTTON ADD
 
-class ShoeTile extends StatefulWidget {
-  final Shoe shoe;
-  final void Function(Shoe)? onTap;
+class ShirtTile extends StatefulWidget {
+  final Shirt shirt;
+  final void Function(Shirt)? onTap;
   
-  ShoeTile({
+  ShirtTile({
     super.key,
-    required this.shoe,
+    required this.shirt,
     required this.onTap,
   });
 
   @override
-  State<ShoeTile> createState() => _ShoeTileState();
+  State<ShirtTile> createState() => _ShirtTileState();
 }
 
-class _ShoeTileState extends State<ShoeTile> {
+class _ShirtTileState extends State<ShirtTile> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -33,13 +33,13 @@ class _ShoeTileState extends State<ShoeTile> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Shoe picture
+              // Shirt picture
               Padding(
                 padding: const EdgeInsets.only(top: 25.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.network(
-                    widget.shoe.imageUrl,
+                    widget.shirt.imageUrl,
                     width: 200,
                     height: 150,
                     fit: BoxFit.cover,
@@ -56,7 +56,7 @@ class _ShoeTileState extends State<ShoeTile> {
               Padding(
                 padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                 child: Text(
-                  widget.shoe.description,
+                  widget.shirt.description,
                   style: TextStyle(color: Colors.grey[600]),
                 ),
               ),
@@ -70,27 +70,27 @@ class _ShoeTileState extends State<ShoeTile> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Shoe Name
+                        // Shirt Name
                         Text(
-                          widget.shoe.name,
+                          widget.shirt.name,
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            fontSize: 16,
                           ),
                         ),
                         const SizedBox(height: 5),
                         // Price
                         Text(
-                          '\$${widget.shoe.price}',
+                          '\$${widget.shirt.price}',
                           style: TextStyle(
                             color: Colors.grey[1200],
                           ),
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          widget.shoe.stock > 3 ? 'Còn hàng' : 'Hết hàng',
+                          widget.shirt.stock > 3 ? 'Còn hàng' : 'Hết hàng',
                           style: TextStyle(
-                            color: widget.shoe.stock > 3 ? Colors.green : Colors.red,
+                            color: widget.shirt.stock > 3 ? Colors.green : Colors.red,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -103,7 +103,7 @@ class _ShoeTileState extends State<ShoeTile> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ShoeInfo(shoe: widget.shoe),
+                            builder: (context) => ShirtInfo(shirt: widget.shirt),
                           ),
                         );
                       },
@@ -129,7 +129,7 @@ class _ShoeTileState extends State<ShoeTile> {
           ),
         ),
         // Hết hàng overlay
-      if (widget.shoe.stock <= 3)
+      if (widget.shirt.stock <= 3)
         Container(
           margin: const EdgeInsets.only(left: 25),
           width: 280,

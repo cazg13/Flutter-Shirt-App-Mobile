@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clothingapp/models/cart.dart';
-import 'package:flutter_clothingapp/models/shoe.dart';
+import 'package:flutter_clothingapp/models/shirt.dart';
 import 'package:provider/provider.dart';
 
-class ShoeInfo extends StatefulWidget {
-  final Shoe shoe;
+class ShirtInfo extends StatefulWidget {
+  final Shirt shirt;
 
-  const ShoeInfo({
+  const ShirtInfo({
     super.key,
-    required this.shoe,
+    required this.shirt,
   });
 
   @override
-  State<ShoeInfo> createState() => _ShoeInfoState();
+  State<ShirtInfo> createState() => _ShirtInfoState();
 }
 
-class _ShoeInfoState extends State<ShoeInfo> {
+class _ShirtInfoState extends State<ShirtInfo> {
   String? selectedSize;
-  void addShoeToCart(BuildContext context) {
+  void addShirtToCart(BuildContext context) {
             if (selectedSize == null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -28,7 +28,7 @@ class _ShoeInfoState extends State<ShoeInfo> {
                 return;
               }
 
-              if (widget.shoe.stock <= 3) {
+              if (widget.shirt.stock <= 3) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Sản phẩm đã hết hàng'),
@@ -38,11 +38,11 @@ class _ShoeInfoState extends State<ShoeInfo> {
                 return;
               }
 
-              widget.shoe.selectedSize = selectedSize;
-              Provider.of<Cart>(context, listen: false).addItemToCart(widget.shoe);
+              widget.shirt.selectedSize = selectedSize;
+              Provider.of<Cart>(context, listen: false).addItemToCart(widget.shirt);
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text('${widget.shoe.name} (Size $selectedSize) added to cart'),
+                  content: Text('${widget.shirt.name} (Size $selectedSize) added to cart'),
                   duration: const Duration(seconds: 2),
                 ),
               );
@@ -55,7 +55,7 @@ class _ShoeInfoState extends State<ShoeInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.shoe.name),
+        title: Text(widget.shirt.name),
       ),
       body: Container(
         margin: const EdgeInsets.all(25),
@@ -66,7 +66,7 @@ class _ShoeInfoState extends State<ShoeInfo> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Shoe picture
+            // Shirt picture
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: SizedBox(
@@ -75,7 +75,7 @@ class _ShoeInfoState extends State<ShoeInfo> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.network(
-                    widget.shoe.imageUrl,
+                    widget.shirt.imageUrl,
                     width: 400,
                     height: 700,
                     
@@ -96,7 +96,7 @@ class _ShoeInfoState extends State<ShoeInfo> {
             Padding(
               padding: const EdgeInsets.only(left: 25.0, right: 25.0),
               child: Text(
-                widget.shoe.description,
+                widget.shirt.description,
                 style: TextStyle(color: Colors.grey[600]),
               ),
             ),
@@ -121,7 +121,7 @@ class _ShoeInfoState extends State<ShoeInfo> {
                   Wrap(
                       spacing: 8.0,
               runSpacing: 8.0,
-              children: widget.shoe.sizes
+              children: widget.shirt.sizes
                   .map((size) => GestureDetector(
                         onTap: () {
                           setState(() {
@@ -174,9 +174,9 @@ class _ShoeInfoState extends State<ShoeInfo> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Shoe Name
+                      // Shirt Name
                       Text(
-                        widget.shoe.name,
+                        widget.shirt.name,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -185,7 +185,7 @@ class _ShoeInfoState extends State<ShoeInfo> {
                       const SizedBox(height: 5),
                       // Price
                       Text(
-                        '\$${widget.shoe.price}',
+                        '\$${widget.shirt.price}',
                         style: TextStyle(
                           color: Colors.grey[600],
                           fontWeight: FontWeight.bold,
@@ -194,9 +194,9 @@ class _ShoeInfoState extends State<ShoeInfo> {
                       const SizedBox(height: 5),
                       // Stock
                       Text(
-                        widget.shoe.stock > 3 ? 'Còn hàng' : 'Hết hàng',
+                        widget.shirt.stock > 3 ? 'Còn hàng' : 'Hết hàng',
                         style: TextStyle(
-                          color: widget.shoe.stock > 3 ? Colors.green : Colors.red,
+                          color: widget.shirt.stock > 3 ? Colors.green : Colors.red,
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
@@ -205,11 +205,11 @@ class _ShoeInfoState extends State<ShoeInfo> {
                   ),
                   // Add Button
                   GestureDetector(
-                    onTap: widget.shoe.stock > 3 ? () => addShoeToCart(context) : null,
+                    onTap: widget.shirt.stock > 3 ? () => addShirtToCart(context) : null,
                     child: Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: widget.shoe.stock > 3 ? Colors.black : Colors.grey,
+                        color: widget.shirt.stock > 3 ? Colors.black : Colors.grey,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(12),
                           bottomRight: Radius.circular(12),

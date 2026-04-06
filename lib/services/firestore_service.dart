@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreService {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  static const String _shoesCollection = 'Shoe';
+  static const String _shirtsCollection = 'Shirt';
 
   /// Lấy tất cả giày từ Firestore
-  static Future<List<Map<String, dynamic>>> getAllShoes() async {
+  static Future<List<Map<String, dynamic>>> getAllShirts() async {
     try {
       QuerySnapshot snapshot = 
-          await _firestore.collection(_shoesCollection).get();
+          await _firestore.collection(_shirtsCollection).get();
       return snapshot.docs
           .map((doc) => {
                 'id': doc.id,
@@ -16,22 +16,22 @@ class FirestoreService {
               })
           .toList();
     } catch (e) {
-      print('Error fetching shoes: $e');
+      print('Error fetching shirts: $e');
       rethrow;
     }
   }
 
   /// Lấy 1 giày theo ID
-  static Future<Map<String, dynamic>?> getShoeById(String id) async {
+  static Future<Map<String, dynamic>?> getShirtById(String id) async {
     try {
       DocumentSnapshot doc = 
-          await _firestore.collection(_shoesCollection).doc(id).get();
+          await _firestore.collection(_shirtsCollection).doc(id).get();
       if (doc.exists) {
         return {'id': doc.id, ...doc.data() as Map<String, dynamic>};
       }
       return null;
     } catch (e) {
-      print('Error fetching shoe: $e');
+      print('Error fetching shirt: $e');
       rethrow;
     }
   }
@@ -39,7 +39,7 @@ class FirestoreService {
     static Future<void> updateProductStock(String productId, int quantityToDeduct) async {
       try {
         DocumentSnapshot doc = await _firestore
-            .collection('Shoe')
+            .collection('Shirt')
             .doc(productId)
             .get();
 
@@ -48,7 +48,7 @@ class FirestoreService {
           int newStock = currentStock - quantityToDeduct;
 
           await _firestore
-              .collection('Shoe')
+              .collection('Shirt')
               .doc(productId)
               .update({'stock': newStock});
         }
@@ -131,24 +131,24 @@ class FirestoreService {
               // Ưu tiên dùng productCode (field 'id')
               if (productCode.isNotEmpty) {
                 try {
-                  print('DEBUG: Querying Shoe with id=$productCode');
-                  // Query để tìm Shoe document có field 'id' = productCode
+                  print('DEBUG: Querying Shirt with id=$productCode');
+                  // Query để tìm Shirt document có field 'id' = productCode
                   final querySnapshot = await _firestore
-                      .collection('Shoe')
+                      .collection('Shirt')
                       .where('id', isEqualTo: productCode)
                       .get();
                   
                   print('DEBUG: Query result: ${querySnapshot.docs.length} documents found');
                   
                   if (querySnapshot.docs.isNotEmpty) {
-                    // Lấy document ID thực của Shoe
-                    final shoeDocId = querySnapshot.docs.first.id;
-                    print('DEBUG: Found Shoe docId=$shoeDocId, updating stock -$quantity');
+                    // Lấy document ID thực của Shirt
+                    final shirtDocId = querySnapshot.docs.first.id;
+                    print('DEBUG: Found Shirt docId=$shirtDocId, updating stock -$quantity');
                     
                     // Update stock dùng document ID
                     await _firestore
-                        .collection('Shoe')
-                        .doc(shoeDocId)
+                        .collection('Shirt')
+                        .doc(shirtDocId)
                         .update({
                           'stock': FieldValue.increment(-quantity),
                         });
@@ -201,7 +201,7 @@ class FirestoreService {
     required List<String> sizes,
   }) async {
     try {
-      await _firestore.collection('Shoe').add({
+      await _firestore.collection('Shirt').add({
         'id': id,
         'name': name,
         'price': price,
@@ -218,7 +218,7 @@ class FirestoreService {
   /// Xóa sản phẩm
   static Future<void> deleteProduct(String docId) async {
     try {
-      await _firestore.collection('Shoe').doc(docId).delete();
+      await _firestore.collection('Shirt').doc(docId).delete();
     } catch (e) {
       throw Exception('Failed to delete product: $e');
     }

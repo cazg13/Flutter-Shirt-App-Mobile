@@ -90,7 +90,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Future<int> getTotalProducts() async {
     try {
       final querySnapshot =
-          await FirebaseFirestore.instance.collection('Shoe').get();
+          await FirebaseFirestore.instance.collection('Shirt').get();
       return querySnapshot.size;
     } catch (e) {
       print('Error getting total products: $e');
@@ -513,7 +513,7 @@ class _DashboardPageState extends State<DashboardPage> {
     // Hiển thị dialog nhập hàng
   Future<void> _showImportStockDialog(BuildContext context) async {
     String? selectedDocumentId;  // DocumentID dài
-    String? selectedShoeDataId;  // Shoe data id ('004', '005', ...)
+    String? selectedShirtDataId;  // Shirt data id ('004', '005', ...)
     String? selectedProductName;
     final TextEditingController quantityController = TextEditingController();
     List<Map<String, dynamic>> products = [];
@@ -521,11 +521,11 @@ class _DashboardPageState extends State<DashboardPage> {
     // Lấy danh sách sản phẩm từ Firestore
     try {
       QuerySnapshot snapshot = 
-          await FirebaseFirestore.instance.collection('Shoe').get();
+          await FirebaseFirestore.instance.collection('Shirt').get();
       products = snapshot.docs
           .map((doc) => {
             'documentId': doc.id,
-            'shoeDataId': doc['id'] ?? '', 
+            'shirtDataId': doc['id'] ?? '', 
             'name': doc['name'] ?? 'Unknown',
           })
           .toList();
@@ -553,7 +553,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     return DropdownMenuItem<String>(
                       value: product['documentId'],
                       child: Text(
-                        '${product['name']} (${product['shoeDataId']})',
+                        '${product['name']} (${product['shirtDataId']})',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -568,7 +568,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           orElse: () => {},
                         );
                         selectedProductName = product['name'];
-                        selectedShoeDataId = product['shoeDataId'];
+                        selectedShirtDataId = product['shirtDataId'];
                       }
                     });
                   },
@@ -617,10 +617,10 @@ class _DashboardPageState extends State<DashboardPage> {
                   return;
                 }
 
-                // Gọi hàm update stock, truyền cả documentId và shoeDataId
+                // Gọi hàm update stock, truyền cả documentId và shirtDataId
                 _handleImportStock(
                   selectedDocumentId!,
-                  selectedShoeDataId!,
+                  selectedShirtDataId!,
                   quantity,
                 );
                 Navigator.pop(context);
@@ -634,24 +634,24 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   // Hàm xử lý nhập hàng
-  Future<void> _handleImportStock(String documentId, String shoeDataId, int quantity) async {
+  Future<void> _handleImportStock(String documentId, String shirtDataId, int quantity) async {
     try {
       final user = FirebaseAuth.instance.currentUser;
       final adminEmail = user?.email ?? 'unknown@example.com';
 
       // 1. Update stock sản phẩm (dùng documentId)
       await FirebaseFirestore.instance
-          .collection('Shoe')
+          .collection('Shirt')
           .doc(documentId)
           .update({
         'stock': FieldValue.increment(quantity),
       });
 
-      // 2. Tạo ImportStockLog (lưu shoeDataId)
+      // 2. Tạo ImportStockLog (lưu shirtDataId)
       await FirebaseFirestore.instance
           .collection('ImportStockLog')
           .add({
-        'productId': shoeDataId,  // ← Lưu Shoe data id ('004', '005', ...)
+        'productId': shirtDataId,  // ← Lưu Shirt data id ('004', '005', ...)
         'stockAdded': quantity,
         'importedAt': Timestamp.now(),
         'adminEmail': adminEmail,

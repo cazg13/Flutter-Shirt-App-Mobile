@@ -75,7 +75,7 @@ class _ProductsManagementPageState extends State<ProductsManagementPage> {
   Future<List<Map<String, dynamic>>> getProducts() async {
     try {
       final querySnapshot = await FirebaseFirestore.instance
-          .collection('Shoe')
+          .collection('Shirt')
           .get();
 
      return querySnapshot.docs
@@ -180,7 +180,7 @@ class _ProductsManagementPageState extends State<ProductsManagementPage> {
 
         // Update Firestore
         await FirebaseFirestore.instance
-            .collection('Shoe')
+            .collection('Shirt')
             .doc(docId)
             .update({
               'name': _nameController.text,

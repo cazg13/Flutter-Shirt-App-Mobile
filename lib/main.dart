@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clothingapp/bloc/shoe_bloc.dart';
-import 'package:flutter_clothingapp/bloc/shoe_event.dart';
+import 'package:flutter_clothingapp/bloc/shirt_bloc.dart';
+import 'package:flutter_clothingapp/bloc/shirt_event.dart';
 import 'package:flutter_clothingapp/components/loading.dart';
 import 'package:flutter_clothingapp/features/auth/data/firebase_auth_repo.dart';
 import 'package:flutter_clothingapp/features/auth/presentation/cubits/auth_cubit.dart';
@@ -11,7 +11,7 @@ import 'package:flutter_clothingapp/features/auth/presentation/pages/auth_page.d
 import 'package:flutter_clothingapp/firebase_options.dart';
 import 'package:flutter_clothingapp/models/cart.dart';
 import 'package:flutter_clothingapp/pages/home_page.dart';
-import 'package:flutter_clothingapp/repositories/shoe_repository.dart';
+import 'package:flutter_clothingapp/repositories/shirt_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -50,10 +50,10 @@ class MyApp extends StatelessWidget {
         create: (context) => AuthCubit(authRepo: firebaseAuthRepo)..checkAuth(),
       ),
       
-      // 3. Khai báo Bloc cho Shoe
-      BlocProvider<ShoeBloc>(
-            create: (context) => ShoeBloc(ShoeRepository())
-              ..add(const FetchAllShoesEvent()),
+      // 3. Khai báo Bloc cho Shirt
+      BlocProvider<ShirtBloc>(
+            create: (context) => ShirtBloc(ShirtRepository())
+              ..add(const FetchAllShirtsEvent()),
           ),
 
       

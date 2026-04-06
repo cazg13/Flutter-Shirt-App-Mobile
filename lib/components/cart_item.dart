@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clothingapp/models/shoe.dart';
+import 'package:flutter_clothingapp/models/shirt.dart';
 import 'package:flutter_clothingapp/models/cart.dart';
 import 'package:provider/provider.dart';
 
 class CartItem extends StatelessWidget {
-  final Shoe shoe;
+  final Shirt shirt;
 
   const CartItem({
     super.key,
-    required this.shoe,
+    required this.shirt,
   });
 
   @override
@@ -23,7 +23,7 @@ class CartItem extends StatelessWidget {
       ),
       child: ListTile(
         leading: Image.network(
-          shoe.imageUrl,
+          shirt.imageUrl,
           width: 60,
           height: 60,
           fit: BoxFit.cover,
@@ -36,13 +36,13 @@ class CartItem extends StatelessWidget {
             );
            },
         ),
-        title: Text(shoe.name),
+        title: Text(shirt.name),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 4),
             Text(
-              '\$${shoe.price}',
+              '\$${shirt.price}',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
@@ -50,7 +50,7 @@ class CartItem extends StatelessWidget {
             ),
             const SizedBox(height: 4),
             Text(
-              'Size: ${shoe.selectedSize ?? 'N/A'}',
+              'Size: ${shirt.selectedSize ?? 'N/A'}',
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 12,
@@ -63,20 +63,20 @@ class CartItem extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.remove_circle_outline),
                   onPressed: () {
-                    Provider.of<Cart>(context, listen: false).decreaseQuantity(shoe);
+                    Provider.of<Cart>(context, listen: false).decreaseQuantity(shirt);
                   },
                   constraints: const BoxConstraints(minWidth: 30, minHeight: 30),
                   padding: EdgeInsets.zero,
                   iconSize: 20,
                 ),
                 Text(
-                  '${shoe.quantity}',
+                  '${shirt.quantity}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 IconButton(
                   icon: const Icon(Icons.add_circle_outline),
                   onPressed: () {
-                    Provider.of<Cart>(context, listen: false).increaseQuantity(shoe);
+                    Provider.of<Cart>(context, listen: false).increaseQuantity(shirt);
                   },
                   constraints: const BoxConstraints(minWidth: 30, minHeight: 30),
                   padding: EdgeInsets.zero,
@@ -89,10 +89,10 @@ class CartItem extends StatelessWidget {
         trailing: IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () {
-            Provider.of<Cart>(context, listen: false).removeItemfromCart(shoe);
+            Provider.of<Cart>(context, listen: false).removeItemfromCart(shirt);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('${shoe.name} (Size: ${shoe.selectedSize ?? 'N/A'}) removed from cart'),
+                content: Text('${shirt.name} (Size: ${shirt.selectedSize ?? 'N/A'}) removed from cart'),
                 duration: const Duration(seconds: 2),
               ),
             );

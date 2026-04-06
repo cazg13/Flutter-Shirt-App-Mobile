@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ImportStockLog {
   final String id;
-  final String productId;        // ID sản phẩm (shoe data id)
+  final String productId;        // ID sản phẩm (shirt data id)
   final int stockAdded;          // Số lượng nhập
   final DateTime importedAt;     // Ngày giờ nhập
   final String adminEmail;       // Email của admin nhập

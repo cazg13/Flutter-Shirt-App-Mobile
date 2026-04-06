@@ -95,22 +95,22 @@ class _OrderCheckoutPageState extends State<OrderCheckoutPage> {
       }
 
       // Tạo list ShopOrderItems từ cart
-      List<ShopOrderItem> orderItems = cart.getUserCart().map((shoe) {
+      List<ShopOrderItem> orderItems = cart.getUserCart().map((shirt) {
         return ShopOrderItem(
-          productDocId: shoe.id,  // Document ID từ Firebase
-          productCode: shoe.id,
-          name: shoe.name,
-          price: shoe.price,
-          quantity: shoe.quantity,
-          imageUrl: shoe.imageUrl,  // Thêm imageUrl vào order item
-          selectedSize: shoe.selectedSize,  // Thêm selectedSize vào order item
+          productDocId: shirt.id,  // Document ID từ Firebase
+          productCode: shirt.id,
+          name: shirt.name,
+          price: shirt.price,
+          quantity: shirt.quantity,
+          imageUrl: shirt.imageUrl,  // Thêm imageUrl vào order item
+          selectedSize: shirt.selectedSize,  // Thêm selectedSize vào order item
         );
       }).toList();
 
       // Tính tổng tiền
       double totalAmount = 0;
-      for (var shoe in cart.getUserCart()) {
-        totalAmount += double.parse(shoe.price) * shoe.quantity;
+      for (var shirt in cart.getUserCart()) {
+        totalAmount += double.parse(shirt.price) * shirt.quantity;
       }
 
       // Tạo ShopOrder object
@@ -175,8 +175,8 @@ class _OrderCheckoutPageState extends State<OrderCheckoutPage> {
   double _calculateTotal() {
     Cart cart = Provider.of<Cart>(context, listen: false);
     double total = 0;
-    for (var shoe in cart.getUserCart()) {
-      total += double.parse(shoe.price) * shoe.quantity;
+    for (var shirt in cart.getUserCart()) {
+      total += double.parse(shirt.price) * shirt.quantity;
     }
     return total;
   }
@@ -270,8 +270,8 @@ class _OrderCheckoutPageState extends State<OrderCheckoutPage> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: cart.getUserCart().length,
                         itemBuilder: (context, index) {
-                          var shoe = cart.getUserCart()[index];
-                          double itemTotal = double.parse(shoe.price) * shoe.quantity;
+                          var shirt = cart.getUserCart()[index];
+                          double itemTotal = double.parse(shirt.price) * shirt.quantity;
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 10),
                             child: Row(
@@ -282,11 +282,11 @@ class _OrderCheckoutPageState extends State<OrderCheckoutPage> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        shoe.name,
+                                        shirt.name,
                                         style: const TextStyle(fontWeight: FontWeight.bold),
                                       ),
                                       Text(
-                                        'Size: ${shoe.selectedSize} × ${shoe.quantity}',
+                                        'Size: ${shirt.selectedSize} × ${shirt.quantity}',
                                         style: const TextStyle(
                                           color: Colors.grey,
                                           fontSize: 12,

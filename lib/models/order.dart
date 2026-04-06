@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ShopOrderItem {
   final String productDocId;      // Document ID từ Firestore
-  final String productCode;        // id của Shoe
+  final String productCode;        // id của Shirt
   final String name;              // Tên giày
   final String price;             // Giá
   final int quantity;        //Số lượng

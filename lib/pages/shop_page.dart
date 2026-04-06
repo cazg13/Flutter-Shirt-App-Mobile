@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clothingapp/bloc/shoe_bloc.dart';
-import 'package:flutter_clothingapp/bloc/shoe_event.dart';
-import 'package:flutter_clothingapp/bloc/shoe_state.dart';
-import 'package:flutter_clothingapp/components/shoe_tile.dart';
+import 'package:flutter_clothingapp/bloc/shirt_bloc.dart';
+import 'package:flutter_clothingapp/bloc/shirt_event.dart';
+import 'package:flutter_clothingapp/bloc/shirt_state.dart';
+import 'package:flutter_clothingapp/components/shirt_tile.dart';
 import 'package:flutter_clothingapp/models/cart.dart';
-import 'package:flutter_clothingapp/models/shoe.dart';
-import 'package:flutter_clothingapp/components/shoeInfo.dart';
+import 'package:flutter_clothingapp/models/shirt.dart';
+import 'package:flutter_clothingapp/components/shirtInfo.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_clothingapp/pages/seeAll_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -21,13 +21,13 @@ class ShopPage extends StatefulWidget {
 
 class _ShopPageState extends State<ShopPage> {
   final TextEditingController _searchController = TextEditingController();
-  late StreamSubscription<ShoeState> _shoeSubscription;
+  late StreamSubscription<ShirtState> _shirtSubscription;
 
-  void addShoeToCart(Shoe shoe) {
-    Provider.of<Cart>(context, listen: false).addItemToCart(shoe);
+  void addShirtToCart(Shirt shirt) {
+    Provider.of<Cart>(context, listen: false).addItemToCart(shirt);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('${shoe.name} added to cart'),
+        content: Text('${shirt.name} added to cart'),
         duration: const Duration(seconds: 2),
       ),
     );
@@ -37,21 +37,21 @@ class _ShopPageState extends State<ShopPage> {
 void initState() {
   super.initState();
   
-  // Lắng nghe ShoeBloc để load shoes cho search
-  _shoeSubscription = context.read<ShoeBloc>().stream.listen((state) {
-    if (state is ShoeLoaded) {
-      Provider.of<Cart>(context, listen: false).setAllShoes(state.shoes);
+  // Lắng nghe ShirtBloc để load shirts cho search
+  _shirtSubscription = context.read<ShirtBloc>().stream.listen((state) {
+    if (state is ShirtLoaded) {
+      Provider.of<Cart>(context, listen: false).setAllShirts(state.shirts);
     }
   });
 }
     // Lấy 3 sản phẩm bán chạy nhất trong năm
-    Future<List<Shoe>> getTopSellingShoes() async {
+    Future<List<Shirt>> getTopSellingShirts() async {
     try {
       final now = DateTime.now();
       final firstDayOfMonth = DateTime(now.year, now.month - 12, 1);
       final firstDayOfNextMonth = now.month == 12
           ? DateTime(now.year + 1, 1, 1)
-          : DateTime(now.year, now.month, 1);
+          : DateTime(now.year, now.month,now.day, 23);
 
       print('🔍 DEBUG: Querying orders from $firstDayOfMonth to $firstDayOfNextMonth');
 
@@ -109,21 +109,21 @@ void initState() {
         return [];
       }
 
-      // Query những shoes này từ Firestore
-      final shoesSnapshot = await FirebaseFirestore.instance
-          .collection('Shoe')
+      // Query những shirts này từ Firestore
+      final shirtsSnapshot = await FirebaseFirestore.instance
+          .collection('Shirt')
           .where('id', whereIn: topProductIds)
           .get();
 
-      print('👟 Found ${shoesSnapshot.docs.length} shoes');
+      print('👟 Found ${shirtsSnapshot.docs.length} shirts');
 
-      final topShoes = shoesSnapshot.docs
-          .map((doc) => Shoe.fromFirebase(doc.data(), doc.id))
+      final topShirts = shirtsSnapshot.docs
+          .map((doc) => Shirt.fromFirebase(doc.data(), doc.id))
           .toList();
 
-      print('✅ Final topShoes: ${topShoes.map((s) => s.name).toList()}');
+      print('✅ Final topShirts: ${topShirts.map((s) => s.name).toList()}');
 
-      return topShoes;
+      return topShirts;
     } catch (e) {
       print('❌ Error: $e');
       return [];
@@ -132,7 +132,7 @@ void initState() {
 
   @override
   Widget build(BuildContext context) {
-    final shoeBloc = context.read<ShoeBloc>();
+    final shirtBloc = context.read<ShirtBloc>();
 
     return Consumer<Cart>(
       builder: (context, cart, child) => Column(
@@ -151,10 +151,10 @@ void initState() {
                   child: TextField(
                     controller: _searchController,
                     onChanged: (value) {
-                      cart.searchShoe(value);
+                      cart.searchShirt(value);
                     },
                     decoration: const InputDecoration(
-                      hintText: 'Tìm kiếm giày...',
+                      hintText: 'Tìm kiếm áo...',
                       border: InputBorder.none,
                     ),
                   ),
@@ -187,10 +187,10 @@ void initState() {
                 physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: cart.searchResults.length,
                 itemBuilder: (context, index) {
-                  Shoe shoe = cart.searchResults[index];
+                  Shirt shirt = cart.searchResults[index];
                   return ListTile(
                     leading: Image.network(
-                     shoe.imageUrl,
+                     shirt.imageUrl,
                       width: 40,
                       height: 40,
                       fit: BoxFit.cover,
@@ -203,13 +203,13 @@ void initState() {
                         );
                       },
                     ),
-                    title: Text(shoe.name),
-                    subtitle: Text('\$${shoe.price}'),
+                    title: Text(shirt.name),
+                    subtitle: Text('\$${shirt.price}'),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ShoeInfo(shoe: shoe),
+                          builder: (context) => ShirtInfo(shirt: shirt),
                         ),
                       );
                     },
@@ -270,10 +270,10 @@ void initState() {
 
           const SizedBox(height: 10),
 
-          // Hot Picks - Top 3 selling shoes
+          // Hot Picks - Top 3 selling shirts
           Expanded(
-            child: FutureBuilder<List<Shoe>>(
-              future: getTopSellingShoes(),
+            child: FutureBuilder<List<Shirt>>(
+              future: getTopSellingShirts(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -287,9 +287,9 @@ void initState() {
                   );
                 }
 
-                final topShoes = snapshot.data ?? [];
+                final topShirts = snapshot.data ?? [];
 
-                if (topShoes.isEmpty) {
+                if (topShirts.isEmpty) {
                   return const Center(
                     child: Text('No data available'),
                   );
@@ -298,13 +298,13 @@ void initState() {
                 
 
                 return ListView.builder(
-                  itemCount: topShoes.length,
+                  itemCount: topShirts.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    Shoe shoe = topShoes[index];
-                    return ShoeTile(
-                      shoe: shoe,
-                      onTap: (shoe) => addShoeToCart(shoe),
+                    Shirt shirt = topShirts[index];
+                    return ShirtTile(
+                      shirt: shirt,
+                      onTap: (shirt) => addShirtToCart(shirt),
                     );
                   },
                 );
@@ -327,7 +327,7 @@ void initState() {
 @override
 void dispose() {
   _searchController.dispose();
-  _shoeSubscription.cancel();
+  _shirtSubscription.cancel();
   super.dispose();
 }
 }

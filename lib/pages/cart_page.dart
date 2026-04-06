@@ -34,7 +34,7 @@ class CartPage extends StatelessWidget {
                     vertical: 10.0,
                   ),
                   child: CartItem(
-                    shoe: cart.getUserCart()[index],
+                    shirt: cart.getUserCart()[index],
                   ),
                 );
               },
@@ -120,8 +120,8 @@ class CartPage extends StatelessWidget {
 
   double _calculateTotal(Cart cart) {
     double total = 0;
-    for (var shoe in cart.getUserCart()) {
-      total += double.parse(shoe.price)*shoe.quantity;
+    for (var shirt in cart.getUserCart()) {
+      total += double.parse(shirt.price)*shirt.quantity;
     }
     return total;
   }

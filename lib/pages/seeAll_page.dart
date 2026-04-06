@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clothingapp/bloc/shoe_bloc.dart';
-import 'package:flutter_clothingapp/bloc/shoe_state.dart';
-import 'package:flutter_clothingapp/models/shoe.dart';
+import 'package:flutter_clothingapp/bloc/shirt_bloc.dart';
+import 'package:flutter_clothingapp/bloc/shirt_state.dart';
+import 'package:flutter_clothingapp/models/shirt.dart';
 import 'package:flutter_clothingapp/components/seeAll_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_clothingapp/models/cart.dart';
@@ -64,8 +64,8 @@ class _SeeAllPageState extends State<SeeAllPage> {
   }
 
   // Hàm sắp xếp sản phẩm
-  List<Shoe> _sortedShoes(List<Shoe> shoes) {
-    List<Shoe> sorted = List.from(shoes); // Tạo bản sao
+  List<Shirt> _sortedShirts(List<Shirt> shirts) {
+    List<Shirt> sorted = List.from(shirts); // Tạo bản sao
 
     switch (_sortOption) {
       case 'Thấp đến cao':
@@ -167,15 +167,15 @@ class _SeeAllPageState extends State<SeeAllPage> {
           ),
         ],
       ),
-      body: BlocBuilder<ShoeBloc, ShoeState>(
+      body: BlocBuilder<ShirtBloc, ShirtState>(
         builder: (context, state) {
-          if (state is ShoeLoading) {
+          if (state is ShirtLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (state is ShoeLoaded) {
+          if (state is ShirtLoaded) {
             // Lấy danh sách đã sắp xếp
-            List<Shoe> displayedShoes = _sortedShoes(state.shoes);
+            List<Shirt> displayedShirts = _sortedShirts(state.shirts);
 
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -185,21 +185,21 @@ class _SeeAllPageState extends State<SeeAllPage> {
                 mainAxisSpacing: 10,
               ),
               padding: const EdgeInsets.all(15),
-              itemCount: displayedShoes.length,
+              itemCount: displayedShirts.length,
               itemBuilder: (context, index) {
-                Shoe shoe = displayedShoes[index];
+                Shirt shirt = displayedShirts[index];
                 return SeeAllTile(
-                  shoe: shoe,
-                  onAddToCart: (shoe) {
+                  shirt: shirt,
+                  onAddToCart: (shirt) {
                     Provider.of<Cart>(context, listen: false)
-                        .addItemToCart(shoe);
+                        .addItemToCart(shirt);
                   },
                 );
               },
             );
           }
 
-          if (state is ShoeError) {
+          if (state is ShirtError) {
             return Center(child: Text('Error: ${state.message}'));
           }
 

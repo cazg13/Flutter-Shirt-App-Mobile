@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clothingapp/models/shoe.dart';
-import 'package:flutter_clothingapp/components/shoeInfo.dart';
+import 'package:flutter_clothingapp/models/shirt.dart';
+import 'package:flutter_clothingapp/components/shirtInfo.dart';
 import 'package:flutter_clothingapp/models/cart.dart';
 import 'package:provider/provider.dart';
 
 class SeeAllTile extends StatelessWidget {
-  final Shoe shoe;
-  final void Function(Shoe)? onAddToCart;
+  final Shirt shirt;
+  final void Function(Shirt)? onAddToCart;
 
   const SeeAllTile({
     super.key,
-    required this.shoe,
+    required this.shirt,
     this.onAddToCart,
   });
 
@@ -23,7 +23,7 @@ class SeeAllTile extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ShoeInfo(shoe: shoe),
+              builder: (context) => ShirtInfo(shirt: shirt),
             ),
           );
         },
@@ -42,7 +42,7 @@ class SeeAllTile extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: Image.network(
-                      shoe.imageUrl,
+                      shirt.imageUrl,
                       width: 200,
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
@@ -64,7 +64,7 @@ class SeeAllTile extends StatelessWidget {
                   children: [
                     // Tên sản phẩm
                     Text(
-                      shoe.name,
+                      shirt.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -78,9 +78,9 @@ class SeeAllTile extends StatelessWidget {
                     
                     // Stock Status
                     Text(
-                      shoe.stock > 3 ? 'Còn hàng' : 'Hết hàng',
+                      shirt.stock > 3 ? 'Còn hàng' : 'Hết hàng',
                       style: TextStyle(
-                        color: shoe.stock > 3 ? Colors.green : Colors.red,
+                        color: shirt.stock > 3 ? Colors.green : Colors.red,
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
                       ),
@@ -99,7 +99,7 @@ class SeeAllTile extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '\$${shoe.price}',
+                            '\$${shirt.price}',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -110,7 +110,7 @@ class SeeAllTile extends StatelessWidget {
                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ShoeInfo(shoe: shoe),
+                                    builder: (context) => ShirtInfo(shirt: shirt),
                                   ),
                                 );
                             },
@@ -138,7 +138,7 @@ class SeeAllTile extends StatelessWidget {
         ),
       ),
        // Overlay blur khi hết hàng
-      if (shoe.stock <= 3)
+      if (shirt.stock <= 3)
         Container(
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.4),
