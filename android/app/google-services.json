@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "915720545812",
+    "project_id": "clothing-app-c3ed7",
+    "storage_bucket": "clothing-app-c3ed7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915720545812:android:21122a40e7bb488b81e901",
+        "android_client_info": {
+          "package_name": "com.example.flutter_clothingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbx9ZOydRCoVjEEcLw4T-6wHxISNpvWkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915720545812:android:880b7fb8ade0fe9481e901",
+        "android_client_info": {
+          "package_name": "com.tin.clothingapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbx9ZOydRCoVjEEcLw4T-6wHxISNpvWkY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
