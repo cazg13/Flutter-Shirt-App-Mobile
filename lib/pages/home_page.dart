@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                  DrawerHeader(
                   child: Image.asset( 'lib/images/nike-5-logo.png',
-                  color:Colors.white,),),
+                  ),),
                   //divider
                   Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),

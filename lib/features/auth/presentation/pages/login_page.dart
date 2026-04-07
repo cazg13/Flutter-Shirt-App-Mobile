@@ -101,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               //name of app
               const Text(
-                '59 SNEAKER SHOP',
+                'SHIRT SHOP',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
               const SizedBox(height: 10),

@@ -84,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 //name of app
                 const Text(
-                  '59 SNEAKER SHOP',
+                  'SHIRT SHOP',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     ),
                 const SizedBox(height: 10),
