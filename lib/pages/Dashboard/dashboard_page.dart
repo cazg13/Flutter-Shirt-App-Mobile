@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_clothingapp/pages/Dashboard/orders_management_page.dart';
 import 'package:flutter_clothingapp/pages/Dashboard/products_management_page.dart';
+import 'package:flutter_clothingapp/pages/Dashboard/searchorders_page.dart';
 import 'package:flutter_clothingapp/pages/Dashboard/users_management_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_clothingapp/pages/Dashboard/log_page.dart';
@@ -302,6 +303,33 @@ class _DashboardPageState extends State<DashboardPage> {
                       ),
                       title: Text(
                         'Quản lí Logs',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                // Tra cứu sản phẩm
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SearchOrderPage(),
+                      ),
+                    );
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 25.0),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.history,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        'Tra cứu sản phẩm',
                         style: TextStyle(
                           color: Colors.white,
                         ),

@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_clothingapp/services/firestore_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
+//UI FOR USER
 class OrderFullInfoPage extends StatefulWidget {
   final ShopOrder order;
 
@@ -397,6 +399,34 @@ Future<void> _updatePaymentStatus(String newStatus) async {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.email, color: Colors.grey, size: 20),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Email',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              Text(
+                                widget.order.userEmail,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
                     Row(
                       children: [
                         const Icon(Icons.person, color: Colors.grey, size: 20),
